@@ -32,8 +32,10 @@ export class OrderService {
       .populate('products.product');
 
     const totalPrice = order.products.reduce((acc, product) => {
-      const price = product.product.price * product.quantity;
-      return acc + price;
+      let price = 0;
+      price = +product.product.price;
+      const quantity = product.quantity;
+      return acc + price*quantity;
     }, 0);
     await order.update({ totalPrice });
 
